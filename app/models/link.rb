@@ -1,3 +1,9 @@
+require 'data_mapper'
+require 'dm-postgres-adapter'
+require 'dm-migrations'
+
+
+
 class Link
 
 	include DataMapper::Resource
@@ -9,6 +15,6 @@ property :url,     Text
 end
 
 
-DataMapper.setup(:default, 'postgres://localhost/bookmark_manager_test')
+DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{ENV['RACK_ENV']}")
 DataMapper.finalize
 DataMapper.auto_upgrade!
