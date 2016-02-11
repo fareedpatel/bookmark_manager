@@ -6,6 +6,7 @@ feature 'adding links' do
  	fill_in('linkname', with: 'facebook')
  	fill_in('url', with: 'facebook.com')
  	click_button "submit"
- 	expect(page).to have_content 'facebook - facebook.com'
+ 	expect(page).to have_content 'Title: facebook URL: facebook.com'
  end
 end
+
