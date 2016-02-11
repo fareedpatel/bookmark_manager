@@ -1,10 +1,12 @@
+ ENV["RACK_ENV"] ||= "development"
+
 require 'rubygems'
 require 'data_mapper'
 require 'sinatra/base'
-require_relative './models/link'
+require_relative 'models/link'
 require 'database_cleaner'
 
- ENV["RACK_ENV"] ||= "development"
+
 
 
 class BookmarkManager < Sinatra::Base
