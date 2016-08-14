@@ -11,15 +11,11 @@ ENV["RACK_ENV"] = "test"
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
-#
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
 require 'capybara'
 require 'capybara/rspec'
 require './app/app'
-
-
-
 Capybara.app = BookmarkManager
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
