@@ -11,7 +11,7 @@ class User
   validates_format_of :email, as: :email_address
 
   property :id, Serial
-  property :email, String, required: true
+  property :email, String, required: true, unique: true
   # this will store both the password and the salt
   # It's Text and not String because String holds
   # only 50 characters by default
