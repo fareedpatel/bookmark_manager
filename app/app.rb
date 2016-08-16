@@ -8,8 +8,11 @@ require_relative 'models/link'
 require_relative 'models/tag'
 require_relative 'models/user'
 require 'database_cleaner'
+require 'sinatra/flash'
 
 class BookmarkManager < Sinatra::Base
+
+  register Sinatra::Flash
 
 	get '/links' do
 		@links = Link.all
@@ -40,15 +43,22 @@ class BookmarkManager < Sinatra::Base
   set :session_secret, 'super_secret'
 
   get '/users/new' do
+    @user = User.new
     erb :'users/new'
   end
 
   post '/users' do
-    user = User.create(email: params[:email],
+    @user = User.create(email: params[:email],
                 password: params[:password],
                 password_confirmation: params[:password_confirmation])
-    session[:user_id] = user.id
-    redirect to('/links')
+    if @user.save #save returns true or false depending on whether the model is saved to the database
+      session[:user_id] = @user.id
+      redirect to('/links')
+    else
+      flash.now[:notice] = "Password and confirmation password do not match"
+      #if it's not valid, let's render the sign up form again
+      erb :'users/new'
+    end
   end
 
   helpers do
