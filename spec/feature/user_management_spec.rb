@@ -15,4 +15,13 @@ feature 'User sign up' do
     expect(current_path).to eq('/users')
     expect(page).to have_content('Password and confirmation password do not match')
   end
+
+  scenario 'I cannot sign up without an e-mail address' do
+    expect { sign_up(email: nil) }.not_to change(User, :count)
+    # expect(page).to have_content('Please input a valid e-mail address')
+  end
+
+  scenario 'i cannot sign up with an invalid e-mail address' do
+    expect {sign_up(email: 'fred@invalid') }.not_to change(User, :count)
+  end
 end
