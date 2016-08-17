@@ -1,4 +1,4 @@
-require 'web_helper'
+require_relative '../helpers/session.rb'
 feature 'User sign up' do
   scenario 'I can sign up as a new user' do
     expect { sign_up }.to change(User, :count).by(1)
@@ -46,5 +46,19 @@ feature 'User sign in' do
     sign_in(email: user.email, password: user.password)
     expect(page).to have_content "Welcome, #{user.email}"
   end
+end
 
+feature 'User sign out' do
+  let!(:user) do
+    User.create(email: 'test@test.com',
+                password: 'test',
+                password_confirmation: 'test')
+  end
+
+  scenario 'while being signed in' do
+    sign_in(email: 'test@test.com', password: 'test')
+    click_button 'Sign out'
+    expect(page).to have_content('goodbye!')
+    expect(page).not_to have_content "Welcome, test@test.com"
+  end
 end

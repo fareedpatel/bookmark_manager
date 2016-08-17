@@ -18,7 +18,10 @@ require 'capybara/rspec'
 require './app/app'
 Capybara.app = BookmarkManager
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require_relative 'helpers/session'
+
 RSpec.configure do |config|
+  config.include SessionHelpers
 
   config.before(:suite) do
     # Everything in this block runs once before all the tests run

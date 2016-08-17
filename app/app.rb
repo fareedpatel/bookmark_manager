@@ -11,6 +11,7 @@ require 'database_cleaner'
 require 'sinatra/flash'
 
 class BookmarkManager < Sinatra::Base
+  use Rack::MethodOverride
 
   register Sinatra::Flash
 
@@ -80,5 +81,12 @@ class BookmarkManager < Sinatra::Base
       erb :'sessions/new'
     end
   end
+
+  delete '/sessions' do
+    session[:user_id] = nil
+    flash.keep[:notice] = 'goodbye!'
+    redirect to '/links'
+  end
+
 run! if app_file == $0
 end
